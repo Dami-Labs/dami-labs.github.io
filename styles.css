@@ -6,7 +6,7 @@
   --line: rgba(241, 239, 233, 0.17);
   --acid: #c8ff3d;
   --blue: #6f8cff;
-  --max-width: 1440px;
+  --max-width: 1280px;
 }
 
 * {
@@ -32,6 +32,15 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--acid);
+  outline-offset: 5px;
+}
+
+section[id] { scroll-margin-top: 2rem; }
+
+::selection { color: var(--ink); background: var(--acid); }
 
 button {
   color: inherit;
@@ -148,9 +157,7 @@ button {
 
 .hero {
   position: relative;
-  min-height: calc(100svh - 5.5rem);
-  padding: clamp(4rem, 9vw, 8.5rem) 0 3rem;
-  overflow: hidden;
+  padding: clamp(3rem, 6vw, 6rem) 0 0;
 }
 
 .hero-kicker {
@@ -181,12 +188,12 @@ button {
 .hero-title {
   position: relative;
   z-index: 2;
-  max-width: 10ch;
-  margin: clamp(2.75rem, 5vw, 4.5rem) 0;
-  font-size: clamp(4.2rem, 10.4vw, 10rem);
+  max-width: 12ch;
+  margin: 2rem 0;
+  font-size: clamp(3.5rem, 6.8vw, 6.5rem);
   font-weight: 530;
   letter-spacing: -0.075em;
-  line-height: 0.82;
+  line-height: 0.98;
 }
 
 .accent-word {
@@ -203,7 +210,7 @@ button {
   align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
-  margin-top: clamp(2rem, 8vh, 6rem);
+  margin-top: 1.5rem;
 }
 
 .hero-copy {
@@ -214,55 +221,69 @@ button {
   line-height: 1.55;
 }
 
-.round-link {
-  display: flex;
-  flex: 0 0 auto;
+/* Static SVG keeps the process illustration crisp without media dependencies. */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  padding-bottom: 4rem;
+}
+.hero-content { min-width: 0; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+.button-primary, .button-secondary {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 7rem;
-  height: 7rem;
-  gap: 0.5rem;
-  color: var(--ink);
-  background: var(--paper);
-  border-radius: 50%;
-  font-size: 0.78rem;
-  font-weight: 700;
-  transition: transform 220ms ease, background 220ms ease;
+  gap: 1.5rem;
+  min-height: 3.25rem;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 160ms ease, border-color 160ms ease;
 }
-
-.round-link:hover,
-.round-link:focus-visible {
-  background: var(--acid);
-  transform: rotate(-6deg) scale(1.04);
+.button-primary { background: var(--acid); color: var(--ink); border-color: var(--acid); }
+.button-primary:hover { background: #dcff87; }
+.button-secondary:hover { border-color: var(--acid); background: var(--ink-soft); }
+.lab-visual {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  background: linear-gradient(135deg, #161c18, #101411);
 }
-
-.round-link-arrow {
-  font-size: 1rem;
+.lab-visual svg { display: block; width: 100%; height: auto; }
+.visual-label, .visual-caption {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.1rem 1.25rem;
+  color: var(--paper-muted);
+  font-size: 0.66rem;
 }
-
-.hero-grid {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: grid;
-  width: min(42vw, 37rem);
-  height: min(42vw, 37rem);
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  opacity: 0.7;
-  transform: translate(11%, 8%) rotate(8deg);
+.visual-label { border-bottom: 1px solid var(--line); }
+.visual-label > span:last-child { margin-left: auto; }
+.visual-caption { justify-content: space-between; border-top: 1px solid var(--line); }
+.visual-caption > span:last-child { font-size: 1rem; color: var(--acid); }
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+  color: var(--paper-muted);
+  font-size: 0.75rem;
 }
-
-.hero-grid span {
-  border: 1px solid rgba(111, 140, 255, 0.16);
-  border-radius: 50%;
-}
+.hero-meta a { display: inline-flex; align-items: center; gap: 1.5rem; min-height: 2.75rem; }
+.hero-meta a:hover { color: var(--acid); }
 
 .statement,
 .focus,
 .principles,
 .closing {
-  padding-block: clamp(6rem, 12vw, 11rem);
+  padding-block: clamp(4rem, 8vw, 7rem);
   border-top: 1px solid var(--line);
 }
 
@@ -273,6 +294,8 @@ button {
 }
 
 .section-index {
+  margin: 0;
+  font-weight: 500;
   color: var(--paper-muted);
   font-size: 0.7rem;
   letter-spacing: 0.16em;
@@ -381,7 +404,7 @@ button {
 }
 
 .principle-card {
-  min-height: 25rem;
+  min-height: 20rem;
   padding: 1.5rem;
   background: var(--ink-soft);
   border: 1px solid var(--line);
@@ -401,7 +424,7 @@ button {
 
 .principle-card h3 {
   max-width: 9ch;
-  margin: 8rem 0 1.25rem;
+  margin: 4.5rem 0 1.25rem;
   font-size: clamp(1.7rem, 2.6vw, 2.7rem);
   font-weight: 520;
   letter-spacing: -0.045em;
@@ -456,6 +479,10 @@ button {
 }
 
 .reveal {
+  opacity: 1;
+}
+
+.reveal.is-pending {
   opacity: 0;
   transform: translateY(1.25rem);
   transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -476,11 +503,20 @@ button {
     min-height: 4.75rem;
   }
 
-  .nav-toggle {
+  .js .nav-toggle {
     display: block;
   }
 
+  .site-header { flex-wrap: wrap; }
+
   .site-nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+  }
+
+  .js .site-nav {
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
@@ -493,7 +529,7 @@ button {
     flex-direction: column;
   }
 
-  .site-nav.is-open {
+  .js .site-nav.is-open {
     display: flex;
   }
 
@@ -512,8 +548,8 @@ button {
 
   .hero-title {
     margin-block: 3rem;
-    font-size: clamp(3.7rem, 19vw, 6.5rem);
-    line-height: 0.85;
+    font-size: clamp(2.8rem, 11.4vw, 5.5rem);
+    line-height: 1;
   }
 
   .hero-bottom {
@@ -521,17 +557,9 @@ button {
     flex-direction: column;
   }
 
-  .round-link {
-    width: 6rem;
-    height: 6rem;
-    align-self: flex-end;
-  }
-
-  .hero-grid {
-    top: 10rem;
-    width: 21rem;
-    height: 21rem;
-  }
+  .hero-layout { grid-template-columns: 1fr; padding-bottom: 2.5rem; }
+  .lab-visual { width: min(100%, 30rem); margin-inline: auto; }
+  .hero-meta { align-items: flex-start; flex-direction: column; gap: 0.2rem; }
 
   .statement,
   .section-heading {
@@ -563,11 +591,11 @@ button {
   }
 
   .principle-card {
-    min-height: 21rem;
+    min-height: auto;
   }
 
   .principle-card h3 {
-    margin-top: 6rem;
+    margin-top: 3rem;
   }
 
   .site-footer {
@@ -591,7 +619,7 @@ button {
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  .reveal.is-pending {
     opacity: 1;
     transform: none;
   }
